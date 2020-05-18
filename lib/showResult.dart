@@ -21,9 +21,11 @@ class _ShowResultState extends State<ShowResult> {
         ),
       body: Center(
         child: Container(
-          child: Text(answer["data"],
-          style: TextStyle(fontSize: 30),),
-              ),
+          child: Text(
+            answer["answer"],
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
       ),
       
     );
