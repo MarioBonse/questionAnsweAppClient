@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
-import 'formQuestion.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'showResult.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
@@ -114,7 +111,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Container card(question, text_long, text_short, str_long, end_long, str_short,
       end_short) {
     SubstringHighlight subH;
+    Card volatile_card;
     if (text_short != '') {
+      if (!text_long.contains(new RegExp(text_short, caseSensitive: false))) {
+        volatile_card = Card(
+            color: Colors.blue,
+            child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(fontSize: 21.0, color: Colors.white),
+                    text: text_short,
+                  ),
+                )));
+      }
+
       subH = SubstringHighlight(
         text: text_long,
         // each string needing highlighting
@@ -128,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.bold
         ),
       );
+
     } else {
       subH = SubstringHighlight(
         text: text_long,
@@ -207,6 +219,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: subH
                       )
                   )
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: volatile_card,
               ),
             ]));
   }
